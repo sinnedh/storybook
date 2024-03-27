@@ -164,7 +164,7 @@ describe('PreviewWeb', () => {
 
       const preview = await createAndRenderPreview();
 
-      expect((preview.storyStore as StoryStore<Renderer>)!.globals.get()).toEqual({ a: 'c' });
+      expect((preview.storyStore as StoryStore<Renderer>)!.userGlobals.get()).toEqual({ a: 'c' });
     });
 
     it('emits the SET_GLOBALS event', async () => {
@@ -229,7 +229,7 @@ describe('PreviewWeb', () => {
       });
       await preview.ready();
 
-      expect((preview.storyStore as StoryStore<Renderer>)!.globals.get()).toEqual({ a: 'b' });
+      expect((preview.storyStore as StoryStore<Renderer>)!.userGlobals.get()).toEqual({ a: 'b' });
     });
   });
 
@@ -785,7 +785,7 @@ describe('PreviewWeb', () => {
 
       emitter.emit(UPDATE_GLOBALS, { globals: { foo: 'bar' } });
 
-      expect((preview.storyStore as StoryStore<Renderer>)!.globals.get()).toEqual({ a: 'b' });
+      expect((preview.storyStore as StoryStore<Renderer>)!.userGlobals.get()).toEqual({ a: 'b' });
     });
 
     it('passes globals in context to renderToCanvas', async () => {
@@ -3317,7 +3317,7 @@ describe('PreviewWeb', () => {
         preview.onGetProjectAnnotationsChanged({ getProjectAnnotations });
         await waitForRender();
 
-        expect((preview.storyStore as StoryStore<Renderer>)!.globals.get()).toEqual({ a: 'c' });
+        expect((preview.storyStore as StoryStore<Renderer>)!.userGlobals.get()).toEqual({ a: 'c' });
       });
     });
 
@@ -3366,7 +3366,9 @@ describe('PreviewWeb', () => {
       preview.onGetProjectAnnotationsChanged({ getProjectAnnotations: newGetProjectAnnotations });
       await waitForRender();
 
-      expect((preview.storyStore as StoryStore<Renderer>)!.globals.get()).toEqual({ a: 'edited' });
+      expect((preview.storyStore as StoryStore<Renderer>)!.userGlobals.get()).toEqual({
+        a: 'edited',
+      });
     });
 
     it('emits SET_GLOBALS with new values', async () => {
